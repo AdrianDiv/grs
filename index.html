@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quiz tłumaczenia</title>
+</head>
+<body>
+  <h1>Quiz tłumaczenia</h1>
+  <div id="quiz">
+    <p id="englishWord"></p>
+    <input type="text" id="translation">
+    <button id="submitButton">Sprawdź odpowiedź</button>
+  </div>
+  <p id="resultMessage"></p>
+  <script>
+ const englishWords = ['table', 'chair', 'desk', 'computer', 'laptop', 'monitor', 'keyboard', 'mouse', 'printer', 'scanner', 'camera', 'phone', 'television', 'radio', 'speaker', 'headphones', 'microwave', 'stove', 'oven', 'fridge', 'freezer', 'dishwasher', 'sink', 'faucet', 'shower', 'bathtub', 'toilet', 'washbasin', 'towel', 'soap', 'shampoo', 'toothpaste', 'toothbrush', 'razor', 'mirror', 'clock', 'watch', 'alarm', 'calendar', 'notebook', 'paper', 'pen', 'pencil', 'marker', 'crayon', 'eraser', 'glue', 'scissors', 'stapler', 'tape', 'key', 'lock', 'handle', 'knob', 'hinge', 'latch', 'chain', 'bolt', 'door', 'window', 'curtain', 'blind', 'shade', 'screen', 'grill', 'fan', 'light', 'bulb', 'lamp', 'candle', 'fire', 'ash', 'smoke', 'flames', 'heat', 'cold', 'ice', 'snow', 'rain', 'clouds', 'sky', 'sun', 'moon', 'star', 'galaxy', 'universe', 'planet', 'asteroid', 'comet', 'satellite', 'rocket', 'shuttle', 'spacesuit', 'telescope', 'microscope', 'magnifying glass', 'binoculars', 'compass', 'ruler', 'measuring tape', 'screwdriver', 'hammer', 'wrench', 'pliers', 'saw', 'drill', 'chisel', 'file', 'sandpaper', 'paintbrush', 'paint roller', 'paint palette', 'paint can', 'easel', 'canvas', 'sculpture', 'pottery', 'jewelry', 'watch repair kit', 'leather', 'fabric', 'thread', 'needle', 'sewing machine', 'loom', 'yarn', 'knitting needles', 'crochet hook', 'basket', 'box', 'bag', 'backpack', 'suitcase', 'briefcase', 'wallet', 'purse', 'keychain', 'umbrella', 'hat', 'cap', 'helmet', 'gloves', 'scarf', 'mask', 'goggles', 'sunglasses', 'earmuffs', 'specs', 'contact lenses', 'eyeglasses', 'book', 'magazine', 'newspaper', 'dictionary', 'thesaurus', 'encyclopedia', 'textbook', 'notebook', 'journal', 'sketchbook', 'recipe book', 'photo album', 'scrapbook', 'yearbook', 'atlas', 'globe', 'map', 'planisphere', 'card', 'ticket', 'coupon', 'receipt', 'invoice', 'bill', 'coin', 'note', 'cash', 'check', 'credit card', 'debit card', 'smart card', 'gift card', 'membership card'];
+
+const correctTranslations = {
+  'table':'stół',
+  'chair': 'krzesło',
+  'desk': 'biurko',
+  'computer': 'komputer',
+  'laptop': 'laptop',
+  'monitor': 'monitor',
+  'keyboard': 'klawiatura',
+  'mouse': 'mysz',
+  'printer': 'drukarka',
+  'scanner': 'skaner',
+  'camera': 'aparat',
+  'phone': 'telefon',
+  'television': 'telewizor',
+  'radio': 'radio',
+  'speaker': 'głośnik',
+  'headphones': 'słuchawki',
+  'microwave': 'kuchenka mikrofalowa',
+  'stove': 'kuchnia',
+  'oven': 'piekarnik',
+  'fridge': 'lodówka',
+  'freezer': 'zamrażarka',
+  'dishwasher': 'zmywarka',
+  'sink': 'zlew',
+  'faucet': 'kran',
+  'shower': 'prysznic',
+  'bathtub': 'wana',
+  'toilet': 'toaleta',
+  'washbasin': 'umywalka',
+  'towel': 'ruch',
+  'soap': 'mydło',
+  'shampoo': 'szampon',
+  'toothpaste': 'pasta do zębów',
+  'toothbrush': 'szczoteczka do zębów',
+  'razor': 'maszynka do golenia',
+  'mirror': 'lustro',
+  'clock': 'zegar',
+  'watch': 'zegarek',
+  'alarm': 'budzik',
+  'calendar': 'kalendarz',
+  'notebook': 'zeszyt',
+  'paper': 'papier',
+  'pen': 'długopis',
+  'pencil': 'ołówek',
+  'marker': 'marker',
+  'crayon': 'kredka',
+  'eraser': 'guma do mazania',
+  'glue': 'klej',
+  'scissors': 'nożyczki',
+  'stapler': 'zszywacz',
+  'tape': 'taśma klejąca',
+  'key': 'klucz',
+  'lock': 'zamek',
+  'handle': 'uchwyt',
+  'knob': 'gałka',
+  'hinge': 'zawias',
+  'latch': 'zatrzask',
+  'chain': 'łańcuch',
+  'bolt': 'bolce',
+  'door': 'drzwi',
+  'window': 'okno',
+  'curtain': 'zasłona',
+  'blind': 'żaluzja',
+  'shade': 'cienie',
+  'screen': 'ekran',
+  'grill': 'grill',
+  'fan': 'wiatrak',
+  'light': 'światło',
+  'bulb': 'żarówka',
+  'lamp': 'lampa',
+  'candle': 'świeca',
+  'fire': 'ognie',
+  'ash': 'popiół',
+  'smoke': 'dym',
+  'flames': 'płomienie',
+  'heat': 'ciepło',
+  'cold': 'zimno',
+  'ice': 'lód',
+  'snow': 'śnieg',
+  'rain': 'deszcz',
+  'clouds': 'chmury',
+  'sky': 'niebo',
+  'sun': 'słońce',
+  'moon': 'księżyc',
+  'star': 'gwiazda',
+  'galaxy': 'galaktyka',
+  'universe': 'wszechświat',
+  'planet': 'planeta',
+  'asteroid': 'asteroida',
+  'comet': 'kometa',
+  'satellite': 'satelita',
+  'rocket': 'rakieta',
+  'shuttle': 'statek kosmiczny',
+  'spacesuit': 'skafander',
+  'telescope': 'teleskop',
+  'microscope': 'mikroskop',
+  'magnifying glass': 'lupa',
+  'binoculars': 'lornetka',
+  'compass': 'kompas',
+  'ruler': 'linijka',
+  'measuring tape': 'miarka',
+  'screwdriver': 'śrubokręt',
+  'hammer': 'młotek',
+  'wrench': 'klucz',
+  'pliers': 'szczypce',
+  'saw': 'piła',
+  'drill': 'wiertarka',
+  'chisel': 'dłuto',
+  'file': 'plik',
+  'sandpaper': 'papier ścierny',
+  'paintbrush': 'pędzel',
+  'paint roller': 'wałek malarski',
+  'paint palette': 'paleta malarska',
+  'paint can': 'puszka z farbą',
+  'easel': 'taboret',
+  'canvas': 'płótno',
+  'sculpture': 'rzeźba',
+  'pottery': 'ceramika',
+  'jewelry': 'biżuteria',
+  'watch repair kit': 'zestaw do naprawy zegarków',
+  'leather': 'skóra',
+  'fabric': 'tkanina',
+  'thread': 'nici',
+  'needle': 'igła',
+  'sewing machine': 'maszyna do szycia',
+  'loom': 'tkanica',
+  'yarn': 'nici',
+  'knitting needles': 'druty do szycia',
+  'crochet hook': 'haczyk do szycia',
+  'basket': 'kosz',
+  'box': 'pudełko',
+  'bag': 'torba',
+  'backpack': 'plecak',
+  'suitcase': 'walizka',
+  'briefcase': 'aktówka',
+  'wallet': 'portfel',
+  'purse': 'torebka',
+  'keychain': 'breloczek',
+  'umbrella': 'parasol',
+  'hat': 'czapka',
+  'cap': 'czapka z daszkiem',
+  'helmet': 'kask',
+  'gloves': 'rękawice',
+  'scarf': 'szalik',
+  'mask': 'maska',
+  'goggles': 'okulary ochronne',
+  'sunglasses': 'okulary przeciwsłoneczne',
+  'earmuffs': 'nauszniki',
+  'specs': 'okulary',
+  'contact lenses': 'soczewki kontaktowe',
+  'eyeglasses': 'okulary',
+  'book': 'książka',
+  'magazine': 'magazyn',
+  'newspaper': 'gazeta',
+  'dictionary': 'słownik',
+  'thesaurus': 'thesaurus',
+  'encyclopedia': 'encyklopedia',
+  'textbook': 'podręcznik',
+  'notebook': 'zeszyt',
+  'journal': 'dziennik',
+  'sketchbook': 'zeszyt rysunkowy',
+  'recipe book': 'książka z przepisami',
+  'photo album': 'album ze zdjęciami',
+  'scrapbook': 'zeszyt z pamiątkami',
+  'yearbook': 'rocznik',
+  'atlas': 'atlas',
+  'globe': 'globus',
+  'map': 'mapa',
+  'planisphere': 'planisfera',
+  'card': 'karta',
+  'ticket': 'bilet',
+  'coupon': 'kupon',
+  'receipt': 'paragon',
+  'invoice': 'faktura',
+  'bill': 'rachunek',
+  'coin': 'moneta',
+  'note': 'nota',
+  'cash': 'gotówka',
+  'check': 'czek',
+  'credit card': 'karta kredytowa',
+  'debit card': 'karta debetowa',
+  'smart card': 'karta inteligentna',
+  'gift card': 'karta podarunkowa',
+  'membership card': 'karta członkowska'
+};
+
+let correctTranslation = '';
+let attempts = 0;
+
+const showNewWord = () => {
+  const index = Math.floor(Math.random() * englishWords.length);
+  const englishWord = englishWords[index];
+  correctTranslation = correctTranslations[englishWord];
+  document.getElementById('englishWord').innerHTML = englishWord;
+  attempts = 0;
+}
+
+const checkAnswer = () => {
+  const translation = document.getElementById('translation').value;
+  const resultMessage = document.getElementById('resultMessage');
+  if (translation === correctTranslation) {
+    resultMessage.innerHTML = 'Odpowiedź poprawna! Losuję nowe słowo.';
+    showNewWord();
+  } else {
+    attempts++;
+    if (attempts >= 3) {
+      resultMessage.innerHTML = `Błędna odpowiedź. Poprawna odpowiedź to: ${correctTranslation}. Losuję nowe słowo.`;
+      showNewWord();
+    } else {
+      resultMessage.innerHTML = 'Błędna odpowiedź. Spróbuj ponownie.';
+    }
+  }
+}
+
+document.getElementById('submitButton').addEventListener('click', checkAnswer);
+
+showNewWord();
+  </script>
+</body>
+</html>
